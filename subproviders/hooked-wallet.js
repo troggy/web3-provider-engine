@@ -627,7 +627,7 @@ HookedWalletSubprovider.prototype.fillInTxExtras = function(txParams, cb){
 
   const tasks = {}
 
-  if (txParams.gasPrice === undefined) {
+  if (txParams.maxFeePerGas === undefined && txParams.gasPrice === undefined) {
     // console.log("need to get gasprice")
     tasks.gasPrice = self.getGasPrice.bind(self)
   }
@@ -637,7 +637,7 @@ HookedWalletSubprovider.prototype.fillInTxExtras = function(txParams, cb){
     tasks.nonce = self.emitPayload.bind(self, { method: 'eth_getTransactionCount', params: [address, 'pending'] })
   }
 
-  if (txParams.gas === undefined) {
+  if (txParams.maxFeePerGas === undefined && txParams.gas === undefined) {
     // console.log("need to get gas")
     tasks.gas = self.estimateGas.bind(self, cloneTxParams(txParams))
   }
